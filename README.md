@@ -1,17 +1,17 @@
 # Blog API (FastAPI)
 
-A robust, production-ready RESTful Blog API built with **FastAPI**, **SQLAlchemy**, and **Pydantic**. It features secure user authentication, role-based resource management, custom exception handling, and structured request logging.
+A robust, production-ready RESTful Blog API built with **FastAPI**, **SQLAlchemy**, and **Pydantic**. It features secure user authentication with JWT, role-based resource management, custom exception handling, structured request logging middleware, and SQLite/PostgreSQL database compatibility.
 
 ---
 
 ## Features
 
-- **User Authentication:** Secure user registration and login using JWT tokens and password hashing (`Passlib` with Argon2).
+- **User Authentication:** Secure registration and login leveraging password hashing (`Passlib`) and JWT token creation.
 - **Blog Management:** Full CRUD operations (Create, Read, Update, Delete) for blog posts.
-- **Authorization:** Resource ownership validation ensuring users can only modify or delete their own posts.
-- **Advanced Routing & Validation:** Powered by Pydantic v2 data validation and dynamic slug generation for blog URLs.
-- **Middleware & Logging:** Custom request logging middleware tracking HTTP methods, URLs, response statuses, and execution duration.
-- **Error Handling:** Centralized custom exception handlers providing clean, descriptive error responses.
+- **Resource Authorization:** Strict ownership checks ensuring users can only edit or delete their own authored blogs.
+- **Custom Exception Handling:** Centralized custom exception classes and handlers returning clean, structured error responses.
+- **Request Logging Middleware:** Detailed request tracking logging HTTP methods, endpoints, response statuses, and execution durations to the `logs/` directory.
+- **Database Architecture:** Built with SQLAlchemy ORM, using a local SQLite file (`blog.db`) for development.
 
 ---
 
@@ -19,24 +19,28 @@ A robust, production-ready RESTful Blog API built with **FastAPI**, **SQLAlchemy
 
 - **Framework:** [FastAPI](https://fastapi.tiangolo.com/)
 - **Database ORM:** [SQLAlchemy](https://www.sqlalchemy.org/)
-- **Data Validation:** [Pydantic](https://docs.pydantic.dev/)
+- **Data Validation:** [Pydantic](https://docs.pydantic.dev/) & `pydantic-settings`
 - **Server:** [Uvicorn](https://www.uvicorn.org/)
-- **Database:** SQLite (Default / Local dev)
+- **Security:** `python-jose` (JWT), `passlib`
+- **Database:** SQLite (`blog.db`)
 
 ---
 
-## Project Structure
+## Detailed Project File Structure
 
 ```text
-Blog-API(FastAPI)/
+Jinnad_Blog_FastAPI/
 │
-├── app/
-│   ├── api/          # Route handlers (users, blogs)
-│   ├── core/         # Security, database configuration, settings
-│   ├── models/       # SQLAlchemy database models
-│   ├── schemas/      # Pydantic request/response schemas
-│   └── main.py       # FastAPI application entry point & middleware
+├── app/                  # Main application package
+│   ├── api/              # API route handlers and endpoints
+│   ├── core/             # Core configurations, security, and dependencies
+│   ├── database/         # Database session management and base setup
+│   ├── models/           # SQLAlchemy ORM models (Database tables)
+│   ├── schemas/          # Pydantic data schemas for validation and serialization
+│   └── main.py           # Application entry point, middleware, and exception handlers
 │
-├── venv/             # Python virtual environment
-├── requirements.txt  # Project dependencies
-└── README.md         # Project documentation
+├── logs/                 # Directory containing application execution and access logs
+├── .env                  # Local environment variables configuration file
+├── README.md             # Project documentation
+├── blog.db               # Local SQLite database file
+└── requirements.txt      # Python dependencies list
